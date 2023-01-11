@@ -4,13 +4,8 @@ namespace ConsoleAppConverter
 {
     internal class Program
     {
-        static async Task Main(string[] args)
+        static void Main(string[] args)
         {
-            UnitList ul = new UnitList();
-
-            Console.WriteLine("Constructed unit list dumped to file: {0} lines", ul.Count);
-
-            await FileOperations.DumpListAsync(ul);
 
             Converter converter = new();
 
@@ -26,18 +21,6 @@ namespace ConsoleAppConverter
             Console.WriteLine("0 °Celsius, °Fahrenheit = {0}", converter.Convert("0 °Celsius", "°Fahrenheit")); // 32.00 °Fahrenheit
             Console.WriteLine("1000 bit, B = {0}", converter.Convert("1000 bit", "B")); // 125.00 B
             Console.WriteLine("100 Bytes, bits = {0}", converter.Convert("100 Bytes", "bits")); // 800.00 bits
-        }
-    }
-    internal class FileOperations
-    {
-        public static async Task DumpListAsync(UnitList ul) 
-        {
-            using StreamWriter file = new("dump.txt");
-
-            foreach (UnitItem ui in ul)
-            {
-                await file.WriteLineAsync(string.Format("{0}{1} {2} x 10^{3}", ui.Prefix, ui.Unit, ui.BaseUnitSymbol, ui.PrefixBase));
-            }
         }
     }
 }
